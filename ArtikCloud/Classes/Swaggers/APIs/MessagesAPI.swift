@@ -544,6 +544,8 @@ public class MessagesAPI: APIBase {
         let URLString = ArtikCloudAPI.basePath + path
         
         let parameters = data.encodeToJSON() as? [String:AnyObject]
+        
+        print("DATA:\n\(parameters)")
 
         let requestBuilder: RequestBuilder<MessageIDEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 

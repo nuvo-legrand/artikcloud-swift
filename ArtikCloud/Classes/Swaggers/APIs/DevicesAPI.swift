@@ -461,9 +461,10 @@ public class DevicesAPI: APIBase {
         var path = "/devices/{deviceId}"
         path = path.stringByReplacingOccurrencesOfString("{deviceId}", withString: "\(deviceId)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
+        print(URLString)
         
         let parameters = device.encodeToJSON() as? [String:AnyObject]
-
+        print(parameters!)
         let requestBuilder: RequestBuilder<DeviceEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: parameters, isBody: true)
@@ -534,6 +535,36 @@ public class DevicesAPI: APIBase {
         let requestBuilder: RequestBuilder<DeviceTokenEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: parameters, isBody: true)
+    }
+    
+    // MARK: Add Device Endpoint
+    public class func addDevice(device: Device, completion: ((data: DeviceEnvelope?, error: ErrorType?) -> Void)) {
+        addDeviceWithRequestBuilder(device: device).execute { (response, error) -> Void in
+            completion(data: response?.body, error: error);
+        }
+    }
+    
+    public class func addDevice(device: Device) -> Promise<DeviceEnvelope> {
+        let deferred = Promise<DeviceEnvelope>.pendingPromise()
+        addDevice(device: device) { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    public class func addDeviceWithRequestBuilder(device: Device) -> RequestBuilder<DeviceEnvelope> {
+        var path = "/devices"
+        let URLString = ArtikCloudAPI.basePath + path
+        
+        let parameters = device.encodeToJSON() as? [String:AnyObject]
+        
+        let requestBuilder: RequestBuilder<DeviceEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
+        
+        return requestBuilder.init(method: "POST", URLString: URLString, parameters: parameters, isBody: true)
     }
 
 }

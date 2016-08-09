@@ -9,7 +9,7 @@ import Foundation
 
 
 /** Tag information. */
-public class Tag: JSONEncodable {
+public class Tag: NSObject, JSONEncodable, NSCoding {
 
     /** Tag Name. */
     public var name: String?
@@ -17,7 +17,20 @@ public class Tag: JSONEncodable {
     public var isCategory: Bool?
     
 
-    public init() {}
+    struct PropertyKey {
+        static let name_key = "_name"
+        static let isCategory_key = "_isCategory"
+    }
+    
+    public override init() {
+        super.init()
+    }
+    
+    init(name: String?, isCategory: Bool?) {
+        super.init()
+        self.name = name
+        self.isCategory = isCategory
+    }
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
@@ -26,5 +39,18 @@ public class Tag: JSONEncodable {
         nillableDictionary["isCategory"] = self.isCategory
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+    
+    // MARK: NSObject Methods
+    public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: PropertyKey.name_key)
+        aCoder.encodeObject(isCategory, forKey: PropertyKey.isCategory_key)
+    }
+    
+    required convenience public init(coder aDecoder: NSCoder) {
+        let name = aDecoder.decodeObjectForKey(PropertyKey.name_key) as? String
+        let isCategory = aDecoder.decodeObjectForKey(PropertyKey.isCategory_key) as? Bool
+        
+        self.init(name: name, isCategory: isCategory)
     }
 }

@@ -673,5 +673,4 @@ public class UsersAPI: APIBase {
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: parameters, isBody: false)
     }
-
 }

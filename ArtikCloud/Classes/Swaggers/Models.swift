@@ -352,7 +352,7 @@ class Decoders {
                 instance.certificateSignature = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["certificateSignature"])
                 instance.eid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["eid"])
                 instance.providerCredentials = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["providerCredentials"])
-                return instance
+                return instance 
             }
 			
 
@@ -505,7 +505,7 @@ class Decoders {
                 instance.latestVersion = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["latestVersion"])
                 instance.lastUpdated = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["lastUpdated"])
                 instance.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"])
-                instance.description = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["description"])
+                instance.description_ = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["description"])
                 instance.uid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["uid"])
                 instance.oid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["oid"])
                 instance.hasCloudConnector = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["hasCloudConnector"])
@@ -1253,7 +1253,7 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Token()
                 instance.accessToken = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["access_token"])
-                instance.expiresIn = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["expires_in"])
+                instance.expiresIn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["expires_in"])!
                 instance.scope = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["scope"])
                 instance.tokenType = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["token_type"])
                 return instance

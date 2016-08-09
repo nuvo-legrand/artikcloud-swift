@@ -81,8 +81,8 @@ public class TokensAPI: APIBase {
      - parameter refreshToken: (form) Refresh Token. 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func refreshToken(grantType grantType: String, refreshToken: String, completion: ((data: RefreshTokenResponse?, error: ErrorType?) -> Void)) {
-        refreshTokenWithRequestBuilder(grantType: grantType, refreshToken: refreshToken).execute { (response, error) -> Void in
+    public class func refreshToken(grantType grantType: String, refreshTokenString: String, completion: ((data: RefreshTokenResponse?, error: ErrorType?) -> Void)) {
+        refreshTokenWithRequestBuilder(grantType: grantType, refreshToken: refreshTokenString).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
         }
     }
@@ -95,9 +95,9 @@ public class TokensAPI: APIBase {
      - parameter refreshToken: (form) Refresh Token. 
      - returns: Promise<RefreshTokenResponse>
      */
-    public class func refreshToken(grantType grantType: String, refreshToken: String) -> Promise<RefreshTokenResponse> {
+    public class func refreshToken(grantType grantType: String, refreshTokenString: String) -> Promise<RefreshTokenResponse> {
         let deferred = Promise<RefreshTokenResponse>.pendingPromise()
-        refreshToken(grantType: grantType, refreshToken: refreshToken) { data, error in
+        refreshToken(grantType: grantType, refreshTokenString: refreshTokenString) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {

@@ -8,4 +8,7 @@ Pod::Spec.new do |s|
   s.source_files = 'ArtikCloud/Classes/Swaggers/**/*.swift'
   s.dependency 'PromiseKit', '~> 3.0.0'
   s.dependency 'Alamofire', '~> 3.1.4'
+  s.authors = { 'Maneesh Sahu' => 'maneesh.sahu@ssi.samsung.com' }
+  s.homepage = 'https://github.com/artikcloud/artikcloud-swift'
+  s.summary = 'This SDK helps you connect your iOS, OS X, tvOS, and watchOS applications to ARTIK Cloud.'
 end
