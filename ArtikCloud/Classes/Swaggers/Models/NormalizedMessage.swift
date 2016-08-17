@@ -9,7 +9,7 @@ import Foundation
 
 
 /** Normalized Message */
-public class NormalizedMessage: JSONEncodable {
+public class NormalizedMessage: NSObject, JSONEncodable, NSCoding {
 
     public var cts: Int?
     public var ts: Int?
@@ -20,8 +20,32 @@ public class NormalizedMessage: JSONEncodable {
     public var mv: Int?
     public var data: [String:AnyObject]?
     
+    struct PropertyKey {
+        static let cts_key = "_cts"
+        static let ts_key = "_ts"
+        static let mid_key = "_mid"
+        static let sdid_key = "_sdid"
+        static let sdtid_key = "_sdtid"
+        static let uid_key = "_uid"
+        static let mv_key = "_mv"
+        static let data_key = "_data"
+    }
 
-    public init() {}
+    public override init() {
+        super.init()
+    }
+    
+    init(cts: Int?, ts: Int?, mid: String?, sdid: String?, sdtid: String?, uid: String?, mv: Int?, data: [String:AnyObject]?) {
+        super.init()
+        self.cts = cts
+        self.ts = ts
+        self.mid = mid
+        self.sdid = sdid
+        self.sdtid = sdtid
+        self.uid = uid
+        self.mv = mv
+        self.data = data
+    }
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
@@ -36,5 +60,29 @@ public class NormalizedMessage: JSONEncodable {
         nillableDictionary["data"] = self.data?.encodeToJSON()
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(cts, forKey: PropertyKey.cts_key)
+        aCoder.encodeObject(ts, forKey: PropertyKey.ts_key)
+        aCoder.encodeObject(mid, forKey: PropertyKey.mid_key)
+        aCoder.encodeObject(sdid, forKey: PropertyKey.sdid_key)
+        aCoder.encodeObject(sdtid, forKey: PropertyKey.sdtid_key)
+        aCoder.encodeObject(uid, forKey: PropertyKey.uid_key)
+        aCoder.encodeObject(mv, forKey: PropertyKey.mv_key)
+        aCoder.encodeObject(data, forKey: PropertyKey.data_key)
+    }
+    
+    required convenience public init(coder aDecoder: NSCoder) {
+        let cts = aDecoder.decodeObjectForKey(PropertyKey.cts_key) as? Int
+        let ts = aDecoder.decodeObjectForKey(PropertyKey.ts_key) as? Int
+        let mid = aDecoder.decodeObjectForKey(PropertyKey.mid_key) as? String
+        let sdid = aDecoder.decodeObjectForKey(PropertyKey.sdid_key) as? String
+        let sdtid = aDecoder.decodeObjectForKey(PropertyKey.sdtid_key) as? String
+        let uid = aDecoder.decodeObjectForKey(PropertyKey.uid_key) as? String
+        let mv = aDecoder.decodeObjectForKey(PropertyKey.mv_key) as? Int
+        let data = aDecoder.decodeObjectForKey(PropertyKey.data_key) as? [String:AnyObject]
+        
+        self.init(cts: cts, ts: ts, mid: mid, sdid: sdid, sdtid: sdtid, uid: uid, mv: mv, data: data)
     }
 }

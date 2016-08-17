@@ -73,6 +73,13 @@ public class DeviceType: NSCoder, JSONEncodable, NSCoding {
         super.init()
     }
     
+    public init(id: String, name: String, description: String) {
+        super.init()
+        self.id = id
+        self.name = name
+        self.description_ = description
+    }
+    
     init(id: String?, uniqueName: String?, latestVersion: Int?, lastUpdated: Int?, name: String?, description: String?, uid: String?, oid: String?, hasCloudConnector: Bool?, approved: Bool?, published: Bool?, protected: Bool?, inStore: Bool?, ownedByCurrentUser: Bool?, tags: [Tag]?, rsp: Bool?, issuerDn: String?, vid: String?) {
         super.init()
         self.id = id
