@@ -994,11 +994,14 @@ class Decoders {
             Decoders.addDecoder(clazz: NormalizedMessage.self) { (source: AnyObject) -> NormalizedMessage in
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = NormalizedMessage()
+                instance.type = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["type"])
                 instance.cts = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["cts"])
                 instance.ts = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["ts"])
                 instance.mid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["mid"])
                 instance.sdid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["sdid"])
                 instance.sdtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["sdtid"])
+                instance.ddid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ddid"])
+                instance.ddtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ddtid"])
                 instance.uid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["uid"])
                 instance.mv = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["mv"])
                 instance.data = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["data"])

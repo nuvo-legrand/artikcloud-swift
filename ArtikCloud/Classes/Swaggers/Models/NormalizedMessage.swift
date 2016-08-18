@@ -11,21 +11,27 @@ import Foundation
 /** Normalized Message */
 public class NormalizedMessage: NSObject, JSONEncodable, NSCoding {
 
+    public var type: String?
     public var cts: Int?
     public var ts: Int?
     public var mid: String?
     public var sdid: String?
     public var sdtid: String?
+    public var ddid: String?
+    public var ddtid: String?
     public var uid: String?
     public var mv: Int?
     public var data: [String:AnyObject]?
     
     struct PropertyKey {
+        static let type_key = "_type"
         static let cts_key = "_cts"
         static let ts_key = "_ts"
         static let mid_key = "_mid"
         static let sdid_key = "_sdid"
         static let sdtid_key = "_sdtid"
+        static let ddid_key = "_ddid"
+        static let ddtid_key = "_ddtid"
         static let uid_key = "_uid"
         static let mv_key = "_mv"
         static let data_key = "_data"
@@ -35,13 +41,16 @@ public class NormalizedMessage: NSObject, JSONEncodable, NSCoding {
         super.init()
     }
     
-    init(cts: Int?, ts: Int?, mid: String?, sdid: String?, sdtid: String?, uid: String?, mv: Int?, data: [String:AnyObject]?) {
+    init(type: String?, cts: Int?, ts: Int?, mid: String?, sdid: String?, sdtid: String?, ddid: String?, ddtid: String?, uid: String?, mv: Int?, data: [String:AnyObject]?) {
         super.init()
+        self.type = type
         self.cts = cts
         self.ts = ts
         self.mid = mid
         self.sdid = sdid
         self.sdtid = sdtid
+        self.ddid = ddid
+        self.ddtid = ddtid
         self.uid = uid
         self.mv = mv
         self.data = data
@@ -50,11 +59,14 @@ public class NormalizedMessage: NSObject, JSONEncodable, NSCoding {
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["type"] = self.type
         nillableDictionary["cts"] = self.cts
         nillableDictionary["ts"] = self.ts
         nillableDictionary["mid"] = self.mid
         nillableDictionary["sdid"] = self.sdid
         nillableDictionary["sdtid"] = self.sdtid
+        nillableDictionary["ddid"] = self.ddid
+        nillableDictionary["ddtid"] = self.ddtid
         nillableDictionary["uid"] = self.uid
         nillableDictionary["mv"] = self.mv
         nillableDictionary["data"] = self.data?.encodeToJSON()
@@ -63,26 +75,32 @@ public class NormalizedMessage: NSObject, JSONEncodable, NSCoding {
     }
     
     public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(type, forKey: PropertyKey.type_key)
         aCoder.encodeObject(cts, forKey: PropertyKey.cts_key)
         aCoder.encodeObject(ts, forKey: PropertyKey.ts_key)
         aCoder.encodeObject(mid, forKey: PropertyKey.mid_key)
         aCoder.encodeObject(sdid, forKey: PropertyKey.sdid_key)
         aCoder.encodeObject(sdtid, forKey: PropertyKey.sdtid_key)
+        aCoder.encodeObject(ddid, forKey: PropertyKey.ddid_key)
+        aCoder.encodeObject(ddtid, forKey: PropertyKey.ddtid_key)
         aCoder.encodeObject(uid, forKey: PropertyKey.uid_key)
         aCoder.encodeObject(mv, forKey: PropertyKey.mv_key)
         aCoder.encodeObject(data, forKey: PropertyKey.data_key)
     }
     
     required convenience public init(coder aDecoder: NSCoder) {
+        let type = aDecoder.decodeObjectForKey(PropertyKey.type_key) as? String
         let cts = aDecoder.decodeObjectForKey(PropertyKey.cts_key) as? Int
         let ts = aDecoder.decodeObjectForKey(PropertyKey.ts_key) as? Int
         let mid = aDecoder.decodeObjectForKey(PropertyKey.mid_key) as? String
         let sdid = aDecoder.decodeObjectForKey(PropertyKey.sdid_key) as? String
         let sdtid = aDecoder.decodeObjectForKey(PropertyKey.sdtid_key) as? String
+        let ddid = aDecoder.decodeObjectForKey(PropertyKey.ddid_key) as? String
+        let ddtid = aDecoder.decodeObjectForKey(PropertyKey.ddtid_key) as? String
         let uid = aDecoder.decodeObjectForKey(PropertyKey.uid_key) as? String
         let mv = aDecoder.decodeObjectForKey(PropertyKey.mv_key) as? Int
         let data = aDecoder.decodeObjectForKey(PropertyKey.data_key) as? [String:AnyObject]
         
-        self.init(cts: cts, ts: ts, mid: mid, sdid: sdid, sdtid: sdtid, uid: uid, mv: mv, data: data)
+        self.init(type: type, cts: cts, ts: ts, mid: mid, sdid: sdid, sdtid: sdtid, ddid: ddid, ddtid: ddtid, uid: uid, mv: mv, data: data)
     }
 }
