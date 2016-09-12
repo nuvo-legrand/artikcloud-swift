@@ -245,6 +245,7 @@ public class DeviceTypesAPI: APIBase {
      - returns: RequestBuilder<DeviceTypesEnvelope> 
      */
     public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int?, count: Int?, tags: String?) -> RequestBuilder<DeviceTypesEnvelope> {
+//        let path = "/devicetypes"
         let path = "/devicetypes"
         let URLString = ArtikCloudAPI.basePath + path
         
