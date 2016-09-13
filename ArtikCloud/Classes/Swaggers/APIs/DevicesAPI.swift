@@ -461,10 +461,8 @@ public class DevicesAPI: APIBase {
         var path = "/devices/{deviceId}"
         path = path.stringByReplacingOccurrencesOfString("{deviceId}", withString: "\(deviceId)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
-        print(URLString)
         
         let parameters = device.encodeToJSON() as? [String:AnyObject]
-        print(parameters!)
         let requestBuilder: RequestBuilder<DeviceEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: parameters, isBody: true)
