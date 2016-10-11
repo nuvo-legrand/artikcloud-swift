@@ -169,8 +169,8 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
-        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags).execute { (response, error) -> Void in
+    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
+        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags, createDevice: createDevice).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
         }
     }
@@ -185,9 +185,9 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - returns: Promise<DeviceTypesEnvelope>
      */
-    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?) -> Promise<DeviceTypesEnvelope> {
+    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?) -> Promise<DeviceTypesEnvelope> {
         let deferred = Promise<DeviceTypesEnvelope>.pendingPromise()
-        getDeviceTypes(name: name, offset: offset, count: count, tags: tags) { data, error in
+        getDeviceTypes(name: name, offset: offset, count: count, tags: tags, createDevice: createDevice) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {
@@ -244,8 +244,8 @@ public class DeviceTypesAPI: APIBase {
 
      - returns: RequestBuilder<DeviceTypesEnvelope> 
      */
-    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int?, count: Int?, tags: String?) -> RequestBuilder<DeviceTypesEnvelope> {
-//        let path = "/devicetypes"
+    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?) -> RequestBuilder<DeviceTypesEnvelope> {
+//        let path = "/minimal/devicetypes"
         let path = "/devicetypes"
         let URLString = ArtikCloudAPI.basePath + path
         
@@ -253,7 +253,8 @@ public class DeviceTypesAPI: APIBase {
             "name": name,
             "offset": offset,
             "count": count,
-            "tags": tags
+            "tags": tags,
+            "createDevice": createDevice
         ]
         let parameters = APIHelper.rejectNil(nillableParameters)
 
