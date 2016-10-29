@@ -92,13 +92,13 @@ public class TokensAPI: APIBase {
      */
     public class func refreshToken(grantType grantType: String, refreshToken: String) -> Promise<RefreshTokenResponse> {
         let deferred = Promise<RefreshTokenResponse>.pendingPromise()
-        /*refreshToken(grantType: grantType, refreshToken: refreshToken) { data, error in
+        refreshToken(grantType: grantType, refreshToken: refreshToken) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {
                 deferred.fulfill(data!)
             }
-        }*/
+        }
         return deferred.promise
     }
 

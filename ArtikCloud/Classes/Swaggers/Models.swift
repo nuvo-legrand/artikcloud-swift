@@ -520,6 +520,50 @@ class Decoders {
             }
 
 
+            // Decoder for [DeviceTask]
+            Decoders.addDecoder(clazz: [DeviceTask].self) { (source: AnyObject) -> [DeviceTask] in
+                return Decoders.decode(clazz: [DeviceTask].self, source: source)
+            }
+            // Decoder for DeviceTask
+            Decoders.addDecoder(clazz: DeviceTask.self) { (source: AnyObject) -> DeviceTask in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTask()
+                instance.numAttempts = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numAttempts"])
+                instance.errorMessage = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorMessage"])
+                instance.errorCode = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorCode"])
+                instance.did = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["did"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                instance.ts = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["ts"])
+                return instance
+            }
+
+
+            // Decoder for [DeviceTaskUpdateRequest]
+            Decoders.addDecoder(clazz: [DeviceTaskUpdateRequest].self) { (source: AnyObject) -> [DeviceTaskUpdateRequest] in
+                return Decoders.decode(clazz: [DeviceTaskUpdateRequest].self, source: source)
+            }
+            // Decoder for DeviceTaskUpdateRequest
+            Decoders.addDecoder(clazz: DeviceTaskUpdateRequest.self) { (source: AnyObject) -> DeviceTaskUpdateRequest in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTaskUpdateRequest()
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                return instance
+            }
+
+
+            // Decoder for [DeviceTaskUpdateResponse]
+            Decoders.addDecoder(clazz: [DeviceTaskUpdateResponse].self) { (source: AnyObject) -> [DeviceTaskUpdateResponse] in
+                return Decoders.decode(clazz: [DeviceTaskUpdateResponse].self, source: source)
+            }
+            // Decoder for DeviceTaskUpdateResponse
+            Decoders.addDecoder(clazz: DeviceTaskUpdateResponse.self) { (source: AnyObject) -> DeviceTaskUpdateResponse in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTaskUpdateResponse()
+                instance.data = Decoders.decodeOptional(clazz: TaskStatus.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
             // Decoder for [DeviceToken]
             Decoders.addDecoder(clazz: [DeviceToken].self) { (source: AnyObject) -> [DeviceToken] in
                 return Decoders.decode(clazz: [DeviceToken].self, source: source)
@@ -605,6 +649,38 @@ class Decoders {
             }
 
 
+            // Decoder for [DeviceTypeInfo]
+            Decoders.addDecoder(clazz: [DeviceTypeInfo].self) { (source: AnyObject) -> [DeviceTypeInfo] in
+                return Decoders.decode(clazz: [DeviceTypeInfo].self, source: source)
+            }
+            // Decoder for DeviceTypeInfo
+            Decoders.addDecoder(clazz: DeviceTypeInfo.self) { (source: AnyObject) -> DeviceTypeInfo in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTypeInfo()
+                instance.devicePropertiesEnabled = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["devicePropertiesEnabled"])
+                instance.pmax = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["pmax"])
+                instance.modifiedOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["modifiedOn"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.pmin = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["pmin"])
+                instance.taskExpiresAfter = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["taskExpiresAfter"])
+                instance.createdOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["createdOn"])
+                return instance
+            }
+
+
+            // Decoder for [DeviceTypeInfoEnvelope]
+            Decoders.addDecoder(clazz: [DeviceTypeInfoEnvelope].self) { (source: AnyObject) -> [DeviceTypeInfoEnvelope] in
+                return Decoders.decode(clazz: [DeviceTypeInfoEnvelope].self, source: source)
+            }
+            // Decoder for DeviceTypeInfoEnvelope
+            Decoders.addDecoder(clazz: DeviceTypeInfoEnvelope.self) { (source: AnyObject) -> DeviceTypeInfoEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTypeInfoEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: DeviceTypeInfo.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
             // Decoder for [DeviceTypesEnvelope]
             Decoders.addDecoder(clazz: [DeviceTypesEnvelope].self) { (source: AnyObject) -> [DeviceTypesEnvelope] in
                 return Decoders.decode(clazz: [DeviceTypesEnvelope].self, source: source)
@@ -617,6 +693,38 @@ class Decoders {
                 instance.count = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["count"])
                 instance.offset = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["offset"])
                 instance.data = Decoders.decodeOptional(clazz: DeviceTypeArray.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [DeviceTypesInfo]
+            Decoders.addDecoder(clazz: [DeviceTypesInfo].self) { (source: AnyObject) -> [DeviceTypesInfo] in
+                return Decoders.decode(clazz: [DeviceTypesInfo].self, source: source)
+            }
+            // Decoder for DeviceTypesInfo
+            Decoders.addDecoder(clazz: DeviceTypesInfo.self) { (source: AnyObject) -> DeviceTypesInfo in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTypesInfo()
+                instance.devicePropertiesEnabled = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["devicePropertiesEnabled"])
+                instance.pmax = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["pmax"])
+                instance.modifiedOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["modifiedOn"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.pmin = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["pmin"])
+                instance.taskExpiresAfter = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["taskExpiresAfter"])
+                instance.createdOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["createdOn"])
+                return instance
+            }
+
+
+            // Decoder for [DeviceTypesInfoEnvelope]
+            Decoders.addDecoder(clazz: [DeviceTypesInfoEnvelope].self) { (source: AnyObject) -> [DeviceTypesInfoEnvelope] in
+                return Decoders.decode(clazz: [DeviceTypesInfoEnvelope].self, source: source)
+            }
+            // Decoder for DeviceTypesInfoEnvelope
+            Decoders.addDecoder(clazz: DeviceTypesInfoEnvelope.self) { (source: AnyObject) -> DeviceTypesInfoEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = DeviceTypesInfoEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: DeviceTypesInfo.self, source: sourceDictionary["data"])
                 return instance
             }
 
@@ -646,6 +754,21 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = ErrorEnvelope()
                 instance.error = Decoders.decodeOptional(clazz: WebSocketError.self, source: sourceDictionary["error"])
+                return instance
+            }
+
+
+            // Decoder for [EventFeedData]
+            Decoders.addDecoder(clazz: [EventFeedData].self) { (source: AnyObject) -> [EventFeedData] in
+                return Decoders.decode(clazz: [EventFeedData].self, source: source)
+            }
+            // Decoder for EventFeedData
+            Decoders.addDecoder(clazz: EventFeedData.self) { (source: AnyObject) -> EventFeedData in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = EventFeedData()
+                instance.event = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["event"])
+                instance.ts = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["ts"])
+                instance.data = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["data"])
                 return instance
             }
 
@@ -1046,6 +1169,48 @@ class Decoders {
             }
 
 
+            // Decoder for [MetadataEnvelope]
+            Decoders.addDecoder(clazz: [MetadataEnvelope].self) { (source: AnyObject) -> [MetadataEnvelope] in
+                return Decoders.decode(clazz: [MetadataEnvelope].self, source: source)
+            }
+            // Decoder for MetadataEnvelope
+            Decoders.addDecoder(clazz: MetadataEnvelope.self) { (source: AnyObject) -> MetadataEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = MetadataEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [MetadataPropertiesEnvelope]
+            Decoders.addDecoder(clazz: [MetadataPropertiesEnvelope].self) { (source: AnyObject) -> [MetadataPropertiesEnvelope] in
+                return Decoders.decode(clazz: [MetadataPropertiesEnvelope].self, source: source)
+            }
+            // Decoder for MetadataPropertiesEnvelope
+            Decoders.addDecoder(clazz: MetadataPropertiesEnvelope.self) { (source: AnyObject) -> MetadataPropertiesEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = MetadataPropertiesEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [MetadataQueryEnvelope]
+            Decoders.addDecoder(clazz: [MetadataQueryEnvelope].self) { (source: AnyObject) -> [MetadataQueryEnvelope] in
+                return Decoders.decode(clazz: [MetadataQueryEnvelope].self, source: source)
+            }
+            // Decoder for MetadataQueryEnvelope
+            Decoders.addDecoder(clazz: MetadataQueryEnvelope.self) { (source: AnyObject) -> MetadataQueryEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = MetadataQueryEnvelope()
+                instance.total = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["total"])
+                instance.data = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["data"])
+                instance.offset = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["offset"])
+                instance.count = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["count"])
+                return instance
+            }
+
+
             // Decoder for [NonEmptyString]
             Decoders.addDecoder(clazz: [NonEmptyString].self) { (source: AnyObject) -> [NonEmptyString] in
                 return Decoders.decode(clazz: [NonEmptyString].self, source: source)
@@ -1427,6 +1592,318 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = TagsEnvelope()
                 instance.data = Decoders.decodeOptional(clazz: TagArray.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [Task]
+            Decoders.addDecoder(clazz: [Task].self) { (source: AnyObject) -> [Task] in
+                return Decoders.decode(clazz: [Task].self, source: source)
+            }
+            // Decoder for Task
+            Decoders.addDecoder(clazz: Task.self) { (source: AnyObject) -> Task in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = Task()
+                instance.filter = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["filter"])
+                instance.taskType = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["taskType"])
+                instance.modifiedOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["modifiedOn"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.statusCounts = Decoders.decodeOptional(clazz: TaskStatusCounts.self, source: sourceDictionary["statusCounts"])
+                instance.property = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"])
+                instance.id = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["id"])
+                instance.dids = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["dids"])
+                instance.taskParameters = Decoders.decodeOptional(clazz: TaskParameters.self, source: sourceDictionary["taskParameters"])
+                instance.createdOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["createdOn"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                return instance
+            }
+
+
+            // Decoder for [TaskByDid]
+            Decoders.addDecoder(clazz: [TaskByDid].self) { (source: AnyObject) -> [TaskByDid] in
+                return Decoders.decode(clazz: [TaskByDid].self, source: source)
+            }
+            // Decoder for TaskByDid
+            Decoders.addDecoder(clazz: TaskByDid.self) { (source: AnyObject) -> TaskByDid in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskByDid()
+                instance.filter = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["filter"])
+                instance.taskType = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["taskType"])
+                instance.modifiedOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["modifiedOn"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.statusCounts = Decoders.decodeOptional(clazz: TaskStatusCounts.self, source: sourceDictionary["statusCounts"])
+                instance.property = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"])
+                instance.statuses = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["statuses"])
+                instance.id = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["id"])
+                instance.dids = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["dids"])
+                instance.taskParameters = Decoders.decodeOptional(clazz: TaskParameters.self, source: sourceDictionary["taskParameters"])
+                instance.createdOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["createdOn"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                return instance
+            }
+
+
+            // Decoder for [TaskByDidList]
+            Decoders.addDecoder(clazz: [TaskByDidList].self) { (source: AnyObject) -> [TaskByDidList] in
+                return Decoders.decode(clazz: [TaskByDidList].self, source: source)
+            }
+            // Decoder for TaskByDidList
+            Decoders.addDecoder(clazz: TaskByDidList.self) { (source: AnyObject) -> TaskByDidList in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskByDidList()
+                instance.tasks = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tasks"])
+                return instance
+            }
+
+
+            // Decoder for [TaskByDidListEnvelope]
+            Decoders.addDecoder(clazz: [TaskByDidListEnvelope].self) { (source: AnyObject) -> [TaskByDidListEnvelope] in
+                return Decoders.decode(clazz: [TaskByDidListEnvelope].self, source: source)
+            }
+            // Decoder for TaskByDidListEnvelope
+            Decoders.addDecoder(clazz: TaskByDidListEnvelope.self) { (source: AnyObject) -> TaskByDidListEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskByDidListEnvelope()
+                instance.total = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["total"])
+                instance.data = Decoders.decodeOptional(clazz: TaskByDidList.self, source: sourceDictionary["data"])
+                instance.offset = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["offset"])
+                instance.count = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["count"])
+                return instance
+            }
+
+
+            // Decoder for [TaskEnvelope]
+            Decoders.addDecoder(clazz: [TaskEnvelope].self) { (source: AnyObject) -> [TaskEnvelope] in
+                return Decoders.decode(clazz: [TaskEnvelope].self, source: source)
+            }
+            // Decoder for TaskEnvelope
+            Decoders.addDecoder(clazz: TaskEnvelope.self) { (source: AnyObject) -> TaskEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: Task.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [TaskHistory]
+            Decoders.addDecoder(clazz: [TaskHistory].self) { (source: AnyObject) -> [TaskHistory] in
+                return Decoders.decode(clazz: [TaskHistory].self, source: source)
+            }
+            // Decoder for TaskHistory
+            Decoders.addDecoder(clazz: TaskHistory.self) { (source: AnyObject) -> TaskHistory in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskHistory()
+                instance.numAttempts = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numAttempts"])
+                instance.errorMessage = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorMessage"])
+                instance.errorCode = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorCode"])
+                instance.did = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["did"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                instance.ts = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["ts"])
+                return instance
+            }
+
+
+            // Decoder for [TaskHistoryList]
+            Decoders.addDecoder(clazz: [TaskHistoryList].self) { (source: AnyObject) -> [TaskHistoryList] in
+                return Decoders.decode(clazz: [TaskHistoryList].self, source: source)
+            }
+            // Decoder for TaskHistoryList
+            Decoders.addDecoder(clazz: TaskHistoryList.self) { (source: AnyObject) -> TaskHistoryList in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskHistoryList()
+                instance.history = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["history"])
+                return instance
+            }
+
+
+            // Decoder for [TaskList]
+            Decoders.addDecoder(clazz: [TaskList].self) { (source: AnyObject) -> [TaskList] in
+                return Decoders.decode(clazz: [TaskList].self, source: source)
+            }
+            // Decoder for TaskList
+            Decoders.addDecoder(clazz: TaskList.self) { (source: AnyObject) -> TaskList in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskList()
+                instance.tasks = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tasks"])
+                return instance
+            }
+
+
+            // Decoder for [TaskListEnvelope]
+            Decoders.addDecoder(clazz: [TaskListEnvelope].self) { (source: AnyObject) -> [TaskListEnvelope] in
+                return Decoders.decode(clazz: [TaskListEnvelope].self, source: source)
+            }
+            // Decoder for TaskListEnvelope
+            Decoders.addDecoder(clazz: TaskListEnvelope.self) { (source: AnyObject) -> TaskListEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskListEnvelope()
+                instance.total = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["total"])
+                instance.data = Decoders.decodeOptional(clazz: TaskList.self, source: sourceDictionary["data"])
+                instance.statusCounts = Decoders.decodeOptional(clazz: TasksStatusCounts.self, source: sourceDictionary["statusCounts"])
+                instance.offset = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["offset"])
+                instance.count = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["count"])
+                return instance
+            }
+
+
+            // Decoder for [TaskParameters]
+            Decoders.addDecoder(clazz: [TaskParameters].self) { (source: AnyObject) -> [TaskParameters] in
+                return Decoders.decode(clazz: [TaskParameters].self, source: source)
+            }
+            // Decoder for TaskParameters
+            Decoders.addDecoder(clazz: TaskParameters.self) { (source: AnyObject) -> TaskParameters in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskParameters()
+                instance.expiresAfter = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["expiresAfter"])
+                instance.value = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["value"])
+                return instance
+            }
+
+
+            // Decoder for [TaskRequest]
+            Decoders.addDecoder(clazz: [TaskRequest].self) { (source: AnyObject) -> [TaskRequest] in
+                return Decoders.decode(clazz: [TaskRequest].self, source: source)
+            }
+            // Decoder for TaskRequest
+            Decoders.addDecoder(clazz: TaskRequest.self) { (source: AnyObject) -> TaskRequest in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskRequest()
+                instance.filter = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["filter"])
+                instance.taskType = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["taskType"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.property = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"])
+                instance.dids = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["dids"])
+                instance.taskParameters = Decoders.decodeOptional(clazz: TaskParameters.self, source: sourceDictionary["taskParameters"])
+                return instance
+            }
+
+
+            // Decoder for [TaskStatus]
+            Decoders.addDecoder(clazz: [TaskStatus].self) { (source: AnyObject) -> [TaskStatus] in
+                return Decoders.decode(clazz: [TaskStatus].self, source: source)
+            }
+            // Decoder for TaskStatus
+            Decoders.addDecoder(clazz: TaskStatus.self) { (source: AnyObject) -> TaskStatus in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskStatus()
+                instance.numAttempts = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numAttempts"])
+                instance.errorMessage = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorMessage"])
+                instance.errorCode = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["errorCode"])
+                instance.did = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["did"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                instance.ts = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["ts"])
+                return instance
+            }
+
+
+            // Decoder for [TaskStatusCounts]
+            Decoders.addDecoder(clazz: [TaskStatusCounts].self) { (source: AnyObject) -> [TaskStatusCounts] in
+                return Decoders.decode(clazz: [TaskStatusCounts].self, source: source)
+            }
+            // Decoder for TaskStatusCounts
+            Decoders.addDecoder(clazz: TaskStatusCounts.self) { (source: AnyObject) -> TaskStatusCounts in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskStatusCounts()
+                instance.numFailed = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numFailed"])
+                instance.numCancelled = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numCancelled"])
+                instance.totalDevices = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["totalDevices"])
+                instance.numCompleted = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numCompleted"])
+                instance.numSucceeded = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["numSucceeded"])
+                return instance
+            }
+
+
+            // Decoder for [TaskStatuses]
+            Decoders.addDecoder(clazz: [TaskStatuses].self) { (source: AnyObject) -> [TaskStatuses] in
+                return Decoders.decode(clazz: [TaskStatuses].self, source: source)
+            }
+            // Decoder for TaskStatuses
+            Decoders.addDecoder(clazz: TaskStatuses.self) { (source: AnyObject) -> TaskStatuses in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskStatuses()
+                instance.filter = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["filter"])
+                instance.taskType = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["taskType"])
+                instance.modifiedOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["modifiedOn"])
+                instance.dtid = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["dtid"])
+                instance.statusCounts = Decoders.decodeOptional(clazz: TaskStatusCounts.self, source: sourceDictionary["statusCounts"])
+                instance.property = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"])
+                instance.statuses = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["statuses"])
+                instance.id = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["id"])
+                instance.dids = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["dids"])
+                instance.taskParameters = Decoders.decodeOptional(clazz: TaskParameters.self, source: sourceDictionary["taskParameters"])
+                instance.createdOn = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["createdOn"])
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                return instance
+            }
+
+
+            // Decoder for [TaskStatusesEnvelope]
+            Decoders.addDecoder(clazz: [TaskStatusesEnvelope].self) { (source: AnyObject) -> [TaskStatusesEnvelope] in
+                return Decoders.decode(clazz: [TaskStatusesEnvelope].self, source: source)
+            }
+            // Decoder for TaskStatusesEnvelope
+            Decoders.addDecoder(clazz: TaskStatusesEnvelope.self) { (source: AnyObject) -> TaskStatusesEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskStatusesEnvelope()
+                instance.total = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["total"])
+                instance.data = Decoders.decodeOptional(clazz: TaskStatuses.self, source: sourceDictionary["data"])
+                instance.offset = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["offset"])
+                instance.count = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["count"])
+                return instance
+            }
+
+
+            // Decoder for [TaskStatusesHistoryEnvelope]
+            Decoders.addDecoder(clazz: [TaskStatusesHistoryEnvelope].self) { (source: AnyObject) -> [TaskStatusesHistoryEnvelope] in
+                return Decoders.decode(clazz: [TaskStatusesHistoryEnvelope].self, source: source)
+            }
+            // Decoder for TaskStatusesHistoryEnvelope
+            Decoders.addDecoder(clazz: TaskStatusesHistoryEnvelope.self) { (source: AnyObject) -> TaskStatusesHistoryEnvelope in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskStatusesHistoryEnvelope()
+                instance.data = Decoders.decodeOptional(clazz: TaskHistoryList.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [TaskUpdateRequest]
+            Decoders.addDecoder(clazz: [TaskUpdateRequest].self) { (source: AnyObject) -> [TaskUpdateRequest] in
+                return Decoders.decode(clazz: [TaskUpdateRequest].self, source: source)
+            }
+            // Decoder for TaskUpdateRequest
+            Decoders.addDecoder(clazz: TaskUpdateRequest.self) { (source: AnyObject) -> TaskUpdateRequest in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskUpdateRequest()
+                instance.status = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["status"])
+                return instance
+            }
+
+
+            // Decoder for [TaskUpdateResponse]
+            Decoders.addDecoder(clazz: [TaskUpdateResponse].self) { (source: AnyObject) -> [TaskUpdateResponse] in
+                return Decoders.decode(clazz: [TaskUpdateResponse].self, source: source)
+            }
+            // Decoder for TaskUpdateResponse
+            Decoders.addDecoder(clazz: TaskUpdateResponse.self) { (source: AnyObject) -> TaskUpdateResponse in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TaskUpdateResponse()
+                instance.data = Decoders.decodeOptional(clazz: Task.self, source: sourceDictionary["data"])
+                return instance
+            }
+
+
+            // Decoder for [TasksStatusCounts]
+            Decoders.addDecoder(clazz: [TasksStatusCounts].self) { (source: AnyObject) -> [TasksStatusCounts] in
+                return Decoders.decode(clazz: [TasksStatusCounts].self, source: source)
+            }
+            // Decoder for TasksStatusCounts
+            Decoders.addDecoder(clazz: TasksStatusCounts.self) { (source: AnyObject) -> TasksStatusCounts in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = TasksStatusCounts()
+                instance.CANCELLED = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["CANCELLED"])
+                instance.COMPLETE = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["COMPLETE"])
+                instance.PROCESSING = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["PROCESSING"])
+                instance.REQUESTED = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["REQUESTED"])
                 return instance
             }
 

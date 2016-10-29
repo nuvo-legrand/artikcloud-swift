@@ -209,7 +209,7 @@ public class ExportAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: artikcloud_oauth
-     - examples: [{contentType=application/json, example=""}]
+     - examples: [{contentType=application/json, example="aeiou"}]
      
      - parameter exportId: (path) Export ID of the export query. 
 
