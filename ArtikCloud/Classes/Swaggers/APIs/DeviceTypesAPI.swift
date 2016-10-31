@@ -250,7 +250,7 @@ public class DeviceTypesAPI: APIBase {
         let URLString = ArtikCloudAPI.basePath + path
         
         let nillableParameters: [String:AnyObject?] = [
-            "name": name,
+            "nameSearch": name,//"name": name,
             "offset": offset,
             "count": count,
             "tags": tags,
