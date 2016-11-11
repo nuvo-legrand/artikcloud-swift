@@ -9,12 +9,19 @@ The Swift SDK requires [CocoaPods](https://guides.cocoapods.org/using/getting-st
 
 ## Installation
 
-To install it, put the API client library in your project and then simply add the following line to your Podfile:
+To install it, simply add `ArtikCloudSwift` to your Podfile:
 
 ```ruby
-use_frameworks!
 source 'https://github.com/CocoaPods/Specs.git'
-pod "ArtikCloud", :path => "../"
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'ArtikCloudSwift', '~> 2.0.5'
+```
+
+Then run the following command from the root of your project:
+```ruby
+pod install
 ```
 
 ## Coding Recommendation
