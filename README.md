@@ -14,7 +14,7 @@ To install it, specify ArtikCloudSwift in your `PodFile`:
 ```ruby
 use_frameworks!
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'ArtikCloudSwift', :git => 'https://github.com/artikcloud/artikcloud-swift.git', :branch => 'pvm-changes', :commit => '3bddb23efaa4f7e8b2c36fc3760c2ebce48e5fe9'
+pod 'ArtikCloud', :git => 'https://github.com/artikcloud/artikcloud-swift.git', :branch => 'pvm-changes', :commit => '3bddb23efaa4f7e8b2c36fc3760c2ebce48e5fe9'
 ```
 
 Then run the following command:
