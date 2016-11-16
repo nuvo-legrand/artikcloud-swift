@@ -9,7 +9,7 @@ import Foundation
 
 
 /** User Information */
-public class User: JSONEncodable {
+public class User: NSObject, NSCoding, JSONEncodable {
     public var id: String?
     public var name: String?
     public var email: String?
@@ -18,7 +18,30 @@ public class User: JSONEncodable {
     public var createdOn: Int64?
     public var modifiedOn: Int64?
 
-    public init() {}
+    struct PropertyKey {
+        static let id_key = "_id"
+        static let name_key = "_name"
+        static let email_key = "_email"
+        static let fullName_key = "_fullName"
+        static let saIdentity = "_saIdentity"
+        static let createdOn = "_createdOn"
+        static let modifiedOn = "_modifiedOn"
+    }
+    
+    public override init() {
+        super.init()
+    }
+    
+    init(id: String?, name: String?, email: String?, fullname: String?, saIdentity: String?, createdOn: Int64?, modifiedOn: Int64?) {
+        super.init()
+        self.id = id
+        self.name = name
+        self.email = email
+        self.fullName = fullname
+        self.saIdentity = saIdentity
+        self.createdOn = createdOn
+        self.modifiedOn = modifiedOn
+    }
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
@@ -32,5 +55,31 @@ public class User: JSONEncodable {
         nillableDictionary["modifiedOn"] = self.modifiedOn?.encodeToJSON()
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(id, forKey: PropertyKey.id_key)
+        aCoder.encodeObject(name, forKey: PropertyKey.name_key)
+        aCoder.encodeObject(email, forKey: PropertyKey.email_key)
+        aCoder.encodeObject(fullName, forKey: PropertyKey.fullName_key)
+        aCoder.encodeObject(saIdentity, forKey: PropertyKey.saIdentity)
+        if let createdOn = createdOn {
+            aCoder.encodeInt64(createdOn, forKey: PropertyKey.createdOn)
+        }
+        if let modifiedOn = modifiedOn {
+            aCoder.encodeInt64(modifiedOn, forKey: PropertyKey.modifiedOn)
+        }
+    }
+    
+    required convenience public init(coder aDecoder: NSCoder) {
+        let id = aDecoder.decodeObjectForKey(PropertyKey.id_key) as? String
+        let name = aDecoder.decodeObjectForKey(PropertyKey.name_key) as? String
+        let email = aDecoder.decodeObjectForKey(PropertyKey.email_key) as? String
+        let fullName = aDecoder.decodeObjectForKey(PropertyKey.fullName_key) as? String
+        let saIdentity = aDecoder.decodeObjectForKey(PropertyKey.saIdentity) as? String
+        let createdOn = aDecoder.decodeInt64ForKey(PropertyKey.createdOn)
+        let modifiedOn = aDecoder.decodeInt64ForKey(PropertyKey.modifiedOn)
+        
+        self.init(id: id, name: name, email: email, fullname: fullName, saIdentity: saIdentity, createdOn: createdOn, modifiedOn: modifiedOn)
     }
 }
