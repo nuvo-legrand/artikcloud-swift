@@ -12,7 +12,6 @@ import PromiseKit
 
 public class TokensAPI: APIBase {
     /**
-     
      Check Token
      
      - parameter tokenInfo: (body) Token object to be checked 
@@ -25,7 +24,6 @@ public class TokensAPI: APIBase {
     }
 
     /**
-     
      Check Token
      
      - parameter tokenInfo: (body) Token object to be checked 
@@ -44,11 +42,9 @@ public class TokensAPI: APIBase {
     }
 
     /**
-     
      Check Token
-     
-     - POST /checkToken
-     - Check Token
+     - POST /accounts/checkToken
+     - (Deprecated) Check Token. See tokenInfo
      - OAuth:
        - type: oauth2
        - name: artikcloud_oauth
@@ -63,41 +59,40 @@ public class TokensAPI: APIBase {
      - returns: RequestBuilder<CheckTokenResponse> 
      */
     public class func checkTokenWithRequestBuilder(tokenInfo tokenInfo: TokenRequest) -> RequestBuilder<CheckTokenResponse> {
-        let path = "/checkToken"
+        let path = "/accounts/checkToken"
         let URLString = ArtikCloudAPI.basePath + path
-        
         let parameters = tokenInfo.encodeToJSON() as? [String:AnyObject]
-
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<CheckTokenResponse>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-     
      Refresh Token
      
      - parameter grantType: (form) Grant Type. 
      - parameter refreshToken: (form) Refresh Token. 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func refreshToken(grantType grantType: String, refreshTokenString: String, completion: ((data: RefreshTokenResponse?, error: ErrorType?) -> Void)) {
-        refreshTokenWithRequestBuilder(grantType: grantType, refreshToken: refreshTokenString).execute { (response, error) -> Void in
+    public class func refreshToken(grantType grantType: String, refreshToken: String, completion: ((data: RefreshTokenResponse?, error: ErrorType?) -> Void)) {
+        refreshTokenWithRequestBuilder(grantType: grantType, refreshToken: refreshToken).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
         }
     }
 
     /**
-     
      Refresh Token
      
      - parameter grantType: (form) Grant Type. 
      - parameter refreshToken: (form) Refresh Token. 
      - returns: Promise<RefreshTokenResponse>
      */
-    public class func refreshToken(grantType grantType: String, refreshTokenString: String) -> Promise<RefreshTokenResponse> {
+    public class func refreshToken(grantType grantType: String, refreshToken refreshTokenString: String) -> Promise<RefreshTokenResponse> {
         let deferred = Promise<RefreshTokenResponse>.pendingPromise()
-        refreshToken(grantType: grantType, refreshTokenString: refreshTokenString) { data, error in
+        refreshToken(grantType: grantType, refreshToken: refreshTokenString) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {
@@ -108,10 +103,8 @@ public class TokensAPI: APIBase {
     }
 
     /**
-     
      Refresh Token
-     
-     - POST /token
+     - POST /accounts/token
      - Refresh Token
      - OAuth:
        - type: oauth2
@@ -129,18 +122,82 @@ public class TokensAPI: APIBase {
      - returns: RequestBuilder<RefreshTokenResponse> 
      */
     public class func refreshTokenWithRequestBuilder(grantType grantType: String, refreshToken: String) -> RequestBuilder<RefreshTokenResponse> {
-        let path = "/token"
+        let path = "/accounts/token"
         let URLString = ArtikCloudAPI.basePath + path
-        
+
         let nillableParameters: [String:AnyObject?] = [
             "grant_type": grantType,
             "refresh_token": refreshToken
         ]
+ 
         let parameters = APIHelper.rejectNil(nillableParameters)
-
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<RefreshTokenResponse>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+    }
+
+    /**
+     Token Info
+     
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func tokenInfo(completion: ((data: TokenInfoSuccessResponse?, error: ErrorType?) -> Void)) {
+        tokenInfoWithRequestBuilder().execute { (response, error) -> Void in
+            completion(data: response?.body, error: error);
+        }
+    }
+
+    /**
+     Token Info
+     
+     - returns: Promise<TokenInfoSuccessResponse>
+     */
+    public class func tokenInfo() -> Promise<TokenInfoSuccessResponse> {
+        let deferred = Promise<TokenInfoSuccessResponse>.pendingPromise()
+        tokenInfo() { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+     Token Info
+     - GET /accounts/tokenInfo
+     - Returns the Token Information
+     - OAuth:
+       - type: oauth2
+       - name: artikcloud_oauth
+     - examples: [{contentType=application/json, example={
+  "data" : {
+    "device_id" : "aeiou",
+    "user_id" : "aeiou",
+    "expires_in" : 123,
+    "client_id" : "aeiou"
+  }
+}}]
+
+     - returns: RequestBuilder<TokenInfoSuccessResponse> 
+     */
+    public class func tokenInfoWithRequestBuilder() -> RequestBuilder<TokenInfoSuccessResponse> {
+        let path = "/accounts/tokenInfo"
+        let URLString = ArtikCloudAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
+        let requestBuilder: RequestBuilder<TokenInfoSuccessResponse>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
 }

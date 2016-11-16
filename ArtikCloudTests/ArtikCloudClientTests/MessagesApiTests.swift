@@ -6,18 +6,20 @@
 //  Copyright © 2016 Samsung Strategy and Innovation Center. All rights reserved.
 //
 
-import ArtikCloud
+import ArtikCloudSwift
 import XCTest
 import PromiseKit
 @testable import ArtikCloudClient
 
-class MessagesApiTests: XCTestCase {
+class MessagesApiTests: ArtikCloudTests {
     
     let testTimeout = 100.0
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        ArtikCloudAPI.customHeaders["Authorization"] = "Bearer " + getProperty(key: "device1.token")
+
     }
     
     override func tearDown() {
@@ -26,20 +28,16 @@ class MessagesApiTests: XCTestCase {
     }
 
     func testSendMessage() {
-        let sdid = "993925c3cd994bf7a51c620884be65e9"
-        let token = "1eef3e3251e147d1ac707a57f6779c49"
+        let sdid = self.getProperty(key: "device1.id")
         
         let expectation = self.expectationWithDescription("testSendMessage")
         
-        ArtikCloudAPI.customHeaders["Authorization"] = "Bearer " + token
-        
-        let message = MessageAction()
+        let message = Message()
         message.sdid = sdid
         message.ts = 0
-        message._type = "message"
-        message.data = [ "volume": 5 ]
+        message.data = [ "steps": 500 ]
         
-        MessagesAPI.sendMessageAction(data: message).then { messageIDEnvelope -> Void in
+        MessagesAPI.sendMessage(data: message).then { messageIDEnvelope -> Void in
             XCTAssertNotNil(messageIDEnvelope.data)
             
             let messageId = messageIDEnvelope.data?.mid
@@ -52,23 +50,74 @@ class MessagesApiTests: XCTestCase {
                     let normalizedMessage = responseEnvelope.data?[0]
                     XCTAssertNotNil(normalizedMessage)
                 
-                    let volume = normalizedMessage!.data!["volume"] as? NSNumber
-                    XCTAssertNotNil(volume)
-                    XCTAssertEqual(NSNumber(int: 5), volume)
+                    let steps = normalizedMessage!.data!["steps"] as? NSNumber
+                    XCTAssertNotNil(steps)
+                    XCTAssertEqual(NSNumber(int: 500), steps)
                 
                     expectation.fulfill()
                 }.always {
                     // Noop
                 }.error { error2 -> Void in
-                    XCTFail("Could not retrieve Normalized messasge")
+                    XCTFail("Could not retrieve Normalized message. Reason \(error2)")
                 }
             }.always {
                 // Noop for now
             }.error { error -> Void in
-                XCTFail("Could not send Message")
+               
+                XCTFail("Could not send Message \(error)")
                 
         }
         
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)    }
+        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+    }
+
+    
+    func testSendActions() {
+        let ddid = self.getProperty(key: "device4.id")
+        
+        let expectation = self.expectationWithDescription("testSendActions")
+        
+        let action = Action()
+        action.name = "setVolume"
+        action.parameters = [ "volume": 5]
+        
+        let actionArray = ActionArray()
+        actionArray.actions = [action]
+        
+        let actions = Actions()
+        actions.ddid = ddid
+        actions.ts = 0
+        actions.type = "action"
+        actions.data = actionArray
+        
+        ArtikCloudAPI.customHeaders["Authorization"] = "Bearer " + getProperty(key: "device4.token")
+        
+        MessagesAPI.sendActions(data: actions).then { messageIDEnvelope -> Void in
+            XCTAssertNotNil(messageIDEnvelope.data)
+            
+            let messageId = messageIDEnvelope.data?.mid
+            NSLog("\(messageId)")
+            
+            MessagesAPI.getNormalizedActions(uid: nil, ddid: nil, mid: messageId, offset: nil, count: nil, startDate: nil, endDate: nil, order: nil ).then { responseEnvelope -> Void in
+                NSLog("Got Normalized Messages Response \(responseEnvelope)")
+                XCTAssertTrue((responseEnvelope.size == 1), "Size should be 1")
+                
+                let normalizedMessage = responseEnvelope.data?[0]
+                XCTAssertNotNil(normalizedMessage)
+                
+                expectation.fulfill()
+                }.always {
+                    // Noop
+                }.error { error2 -> Void in
+                    XCTFail("Could not retrieve Normalized actions. Reason \(error2)")
+                }
+            }.always {
+                // Noop for now
+            }.error { error -> Void in
+                XCTFail("Could not send Actions \(error)")
+            }
+        
+        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+    }
 
 }

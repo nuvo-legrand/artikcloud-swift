@@ -10,9 +10,7 @@ import Foundation
 
 /** Contains the array of Action Details */
 public class ActionDetailsArray: JSONEncodable {
-
     public var actions: [ActionDetails]?
-    
 
     public init() {}
 

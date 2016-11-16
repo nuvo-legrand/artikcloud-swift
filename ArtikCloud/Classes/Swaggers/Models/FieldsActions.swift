@@ -9,27 +9,13 @@ import Foundation
 
 
 /** Fields and Actions */
-public class FieldsActions: NSObject, NSCoding, JSONEncodable {
-
+public class FieldsActions: JSONEncodable {
     /** Message Fields */
     public var fields: [String:AnyObject]?
     /** Actions */
     public var actions: [String:AnyObject]?
-    
-    struct PropertyKey {
-        static let fields_key = "_fields"
-        static let actions_key = "_actions"
-    }
 
-    public override init() {
-        super.init()
-    }
-    
-    init(fields: [String:AnyObject]?, actions: [String:AnyObject]?) {
-        super.init()
-        self.fields = fields
-        self.actions = actions
-    }
+    public init() {}
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
@@ -38,18 +24,5 @@ public class FieldsActions: NSObject, NSCoding, JSONEncodable {
         nillableDictionary["actions"] = self.actions?.encodeToJSON()
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
-    }
-    
-    // MARK: NSObject Methods
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(fields, forKey: PropertyKey.fields_key)
-        aCoder.encodeObject(actions, forKey: PropertyKey.actions_key)
-    }
-    
-    required convenience public init(coder aDecoder: NSCoder) {
-        let fields = aDecoder.decodeObjectForKey(PropertyKey.fields_key) as? [String:AnyObject]
-        let actions = aDecoder.decodeObjectForKey(PropertyKey.actions_key) as? [String:AnyObject]
-        
-        self.init(fields: fields, actions: actions)
     }
 }

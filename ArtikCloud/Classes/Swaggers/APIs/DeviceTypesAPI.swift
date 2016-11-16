@@ -12,7 +12,6 @@ import PromiseKit
 
 public class DeviceTypesAPI: APIBase {
     /**
-     
      Get Available Manifest Versions
      
      - parameter deviceTypeId: (path) deviceTypeId 
@@ -25,7 +24,6 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Available Manifest Versions
      
      - parameter deviceTypeId: (path) deviceTypeId 
@@ -44,9 +42,7 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Available Manifest Versions
-     
      - GET /devicetypes/{deviceTypeId}/availablemanifestversions
      - Get a Device Type's available manifest versions
      - OAuth:
@@ -54,7 +50,7 @@ public class DeviceTypesAPI: APIBase {
        - name: artikcloud_oauth
      - examples: [{contentType=application/json, example={
   "data" : {
-    "versions" : [ "" ]
+    "versions" : [ "aeiou" ]
   }
 }}]
      
@@ -66,17 +62,19 @@ public class DeviceTypesAPI: APIBase {
         var path = "/devicetypes/{deviceTypeId}/availablemanifestversions"
         path = path.stringByReplacingOccurrencesOfString("{deviceTypeId}", withString: "\(deviceTypeId)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
-        
-        let nillableParameters: [String:AnyObject?] = [:]
-        let parameters = APIHelper.rejectNil(nillableParameters)
 
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<ManifestVersionsEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-     
      Get Device Type
      
      - parameter deviceTypeId: (path) deviceTypeId 
@@ -89,7 +87,6 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Device Type
      
      - parameter deviceTypeId: (path) deviceTypeId 
@@ -108,9 +105,7 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Device Type
-     
      - GET /devicetypes/{deviceTypeId}
      - Retrieves a Device Type
      - OAuth:
@@ -150,17 +145,19 @@ public class DeviceTypesAPI: APIBase {
         var path = "/devicetypes/{deviceTypeId}"
         path = path.stringByReplacingOccurrencesOfString("{deviceTypeId}", withString: "\(deviceTypeId)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
-        
-        let nillableParameters: [String:AnyObject?] = [:]
-        let parameters = APIHelper.rejectNil(nillableParameters)
 
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<DeviceTypeEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-     
      Get Device Types
      
      - parameter name: (query) Device Type name 
@@ -169,14 +166,13 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
-        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags, createDevice: createDevice).execute { (response, error) -> Void in
+    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
+        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
         }
     }
 
     /**
-     
      Get Device Types
      
      - parameter name: (query) Device Type name 
@@ -185,9 +181,9 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - returns: Promise<DeviceTypesEnvelope>
      */
-    public class func getDeviceTypes(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?) -> Promise<DeviceTypesEnvelope> {
+    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil) -> Promise<DeviceTypesEnvelope> {
         let deferred = Promise<DeviceTypesEnvelope>.pendingPromise()
-        getDeviceTypes(name: name, offset: offset, count: count, tags: tags, createDevice: createDevice) { data, error in
+        getDeviceTypes(name: name, offset: offset, count: count, tags: tags) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {
@@ -198,9 +194,7 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Device Types
-     
      - GET /devicetypes
      - Retrieves Device Types
      - OAuth:
@@ -244,27 +238,128 @@ public class DeviceTypesAPI: APIBase {
 
      - returns: RequestBuilder<DeviceTypesEnvelope> 
      */
-    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int?, count: Int?, tags: String?, createDevice: Bool?) -> RequestBuilder<DeviceTypesEnvelope> {
-//        let path = "/minimal/devicetypes"
+    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil) -> RequestBuilder<DeviceTypesEnvelope> {
         let path = "/devicetypes"
         let URLString = ArtikCloudAPI.basePath + path
-        
-        let nillableParameters: [String:AnyObject?] = [
-            "nameSearch": name,//"name": name,
-            "offset": offset,
-            "count": count,
-            "tags": tags,
-            "createDevice": createDevice
-        ]
-        let parameters = APIHelper.rejectNil(nillableParameters)
 
+        let nillableParameters: [String:AnyObject?] = [
+            "name": name,
+            "offset": offset?.encodeToJSON(),
+            "count": count?.encodeToJSON(),
+            "tags": tags
+        ]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<DeviceTypesEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
+     Get Device Types by Application
      
+     - parameter appId: (path) Application ID. 
+     - parameter productInfo: (query) Flag to include the associated ProductInfo if present (optional)
+     - parameter count: (query) Desired count of items in the result set. (optional)
+     - parameter offset: (query) Offset for pagination. (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func getDeviceTypesByApplication(appId appId: String, productInfo: Bool? = nil, count: Int32? = nil, offset: Int32? = nil, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
+        getDeviceTypesByApplicationWithRequestBuilder(appId: appId, productInfo: productInfo, count: count, offset: offset).execute { (response, error) -> Void in
+            completion(data: response?.body, error: error);
+        }
+    }
+
+    /**
+     Get Device Types by Application
+     
+     - parameter appId: (path) Application ID. 
+     - parameter productInfo: (query) Flag to include the associated ProductInfo if present (optional)
+     - parameter count: (query) Desired count of items in the result set. (optional)
+     - parameter offset: (query) Offset for pagination. (optional)
+     - returns: Promise<DeviceTypesEnvelope>
+     */
+    public class func getDeviceTypesByApplication(appId appId: String, productInfo: Bool? = nil, count: Int32? = nil, offset: Int32? = nil) -> Promise<DeviceTypesEnvelope> {
+        let deferred = Promise<DeviceTypesEnvelope>.pendingPromise()
+        getDeviceTypesByApplication(appId: appId, productInfo: productInfo, count: count, offset: offset) { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+     Get Device Types by Application
+     - GET /applications/{appId}/devicetypes
+     - Get Device Types by Application
+     - OAuth:
+       - type: oauth2
+       - name: artikcloud_oauth
+     - examples: [{contentType=application/json, example={
+  "total" : 123,
+  "offset" : 123,
+  "data" : {
+    "deviceTypes" : [ {
+      "hasCloudConnector" : true,
+      "issuerDn" : "aeiou",
+      "description" : "aeiou",
+      "oid" : "aeiou",
+      "published" : true,
+      "rsp" : true,
+      "tags" : [ {
+        "isCategory" : true,
+        "name" : "aeiou"
+      } ],
+      "vid" : "aeiou",
+      "lastUpdated" : 123456789,
+      "uid" : "aeiou",
+      "approved" : true,
+      "uniqueName" : "aeiou",
+      "protected" : true,
+      "latestVersion" : 123,
+      "inStore" : true,
+      "name" : "aeiou",
+      "id" : "aeiou",
+      "ownedByCurrentUser" : true
+    } ]
+  },
+  "count" : 123
+}}]
+     
+     - parameter appId: (path) Application ID. 
+     - parameter productInfo: (query) Flag to include the associated ProductInfo if present (optional)
+     - parameter count: (query) Desired count of items in the result set. (optional)
+     - parameter offset: (query) Offset for pagination. (optional)
+
+     - returns: RequestBuilder<DeviceTypesEnvelope> 
+     */
+    public class func getDeviceTypesByApplicationWithRequestBuilder(appId appId: String, productInfo: Bool? = nil, count: Int32? = nil, offset: Int32? = nil) -> RequestBuilder<DeviceTypesEnvelope> {
+        var path = "/applications/{appId}/devicetypes"
+        path = path.stringByReplacingOccurrencesOfString("{appId}", withString: "\(appId)", options: .LiteralSearch, range: nil)
+        let URLString = ArtikCloudAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [
+            "productInfo": productInfo,
+            "count": count?.encodeToJSON(),
+            "offset": offset?.encodeToJSON()
+        ]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
+        let requestBuilder: RequestBuilder<DeviceTypesEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+    }
+
+    /**
      Get Latest Manifest Properties
      
      - parameter deviceTypeId: (path) Device Type ID. 
@@ -277,7 +372,6 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Latest Manifest Properties
      
      - parameter deviceTypeId: (path) Device Type ID. 
@@ -296,9 +390,7 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get Latest Manifest Properties
-     
      - GET /devicetypes/{deviceTypeId}/manifests/latest/properties
      - Get a Device Type's manifest properties for the latest version.
      - OAuth:
@@ -308,10 +400,10 @@ public class DeviceTypesAPI: APIBase {
   "data" : {
     "properties" : {
       "fields" : {
-        "key" : ""
+        "key" : "{}"
       },
       "actions" : {
-        "key" : ""
+        "key" : "{}"
       }
     }
   }
@@ -325,17 +417,19 @@ public class DeviceTypesAPI: APIBase {
         var path = "/devicetypes/{deviceTypeId}/manifests/latest/properties"
         path = path.stringByReplacingOccurrencesOfString("{deviceTypeId}", withString: "\(deviceTypeId)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
-        
-        let nillableParameters: [String:AnyObject?] = [:]
-        let parameters = APIHelper.rejectNil(nillableParameters)
 
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<ManifestPropertiesEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-     
      Get manifest properties
      
      - parameter deviceTypeId: (path) Device Type ID. 
@@ -349,7 +443,6 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get manifest properties
      
      - parameter deviceTypeId: (path) Device Type ID. 
@@ -369,9 +462,7 @@ public class DeviceTypesAPI: APIBase {
     }
 
     /**
-     
      Get manifest properties
-     
      - GET /devicetypes/{deviceTypeId}/manifests/{version}/properties
      - Get a Device Type's manifest properties for a specific version.
      - OAuth:
@@ -381,10 +472,10 @@ public class DeviceTypesAPI: APIBase {
   "data" : {
     "properties" : {
       "fields" : {
-        "key" : ""
+        "key" : "{}"
       },
       "actions" : {
-        "key" : ""
+        "key" : "{}"
       }
     }
   }
@@ -400,13 +491,16 @@ public class DeviceTypesAPI: APIBase {
         path = path.stringByReplacingOccurrencesOfString("{deviceTypeId}", withString: "\(deviceTypeId)", options: .LiteralSearch, range: nil)
         path = path.stringByReplacingOccurrencesOfString("{version}", withString: "\(version)", options: .LiteralSearch, range: nil)
         let URLString = ArtikCloudAPI.basePath + path
-        
-        let nillableParameters: [String:AnyObject?] = [:]
-        let parameters = APIHelper.rejectNil(nillableParameters)
 
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+ 
         let requestBuilder: RequestBuilder<ManifestPropertiesEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
 }

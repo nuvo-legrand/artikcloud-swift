@@ -9,19 +9,18 @@ import Foundation
 
 
 /** Device Type Information */
-public class DeviceType: NSCoder, JSONEncodable, NSCoding {
-
+public class DeviceType: JSONEncodable {
     /** Device Type ID. */
     public var id: String?
     /** Unique Name. */
     public var uniqueName: String?
     /** Latest Manifest version. */
-    public var latestVersion: Int?
-    public var lastUpdated: Int?
+    public var latestVersion: Int32?
+    public var lastUpdated: Int64?
     /** Name. */
     public var name: String?
     /** Description. */
-    public var description_: String?
+    public var description: String?
     /** User ID. */
     public var uid: String?
     /** Organization ID. */
@@ -46,71 +45,18 @@ public class DeviceType: NSCoder, JSONEncodable, NSCoding {
     public var issuerDn: String?
     /** Vendor ID. (Used in SDR) */
     public var vid: String?
-    
-    
-    struct PropertyKey {
-        static let id_key = "_id"
-        static let uniqueName_key = "_uniqueName"
-        static let latestVersion_key = "_latestVersion"
-        static let lastUpdated_key = "_lastUpdated"
-        static let name_key = "_name"
-        static let description__key = "_description_"
-        static let uid_key = "_uid"
-        static let oid_key = "_oid"
-        static let hasCloudConnector_key = "_hasCloudConnector"
-        static let approved_key = "_approved"
-        static let published_key = "_published"
-        static let protected_key = "_protected"
-        static let inStore_key = "_inStore"
-        static let ownedByCurrentUser_key = "_ownedByCurrentUser"
-        static let tags_key = "_tags"
-        static let rsp_key = "_rsp"
-        static let issuerDn_key = "_issuerDn"
-        static let vid_key = "_vid"
-    }
 
-    public override init() {
-        super.init()
-    }
-    
-    public init(id: String, name: String, description: String) {
-        super.init()
-        self.id = id
-        self.name = name
-        self.description_ = description
-    }
-    
-    init(id: String?, uniqueName: String?, latestVersion: Int?, lastUpdated: Int?, name: String?, description: String?, uid: String?, oid: String?, hasCloudConnector: Bool?, approved: Bool?, published: Bool?, protected: Bool?, inStore: Bool?, ownedByCurrentUser: Bool?, tags: [Tag]?, rsp: Bool?, issuerDn: String?, vid: String?) {
-        super.init()
-        self.id = id
-        self.uniqueName = uniqueName
-        self.latestVersion = latestVersion
-        self.lastUpdated = lastUpdated
-        self.name = name
-        self.description_ = description
-        self.uid = uid
-        self.oid = oid
-        self.hasCloudConnector = hasCloudConnector
-        self.approved = approved
-        self.published = published
-        self.protected = protected
-        self.inStore = inStore
-        self.ownedByCurrentUser = ownedByCurrentUser
-        self.tags = tags
-        self.rsp = rsp
-        self.issuerDn = issuerDn
-        self.vid = vid
-    }
+    public init() {}
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["id"] = self.id
         nillableDictionary["uniqueName"] = self.uniqueName
-        nillableDictionary["latestVersion"] = self.latestVersion
-        nillableDictionary["lastUpdated"] = self.lastUpdated
+        nillableDictionary["latestVersion"] = self.latestVersion?.encodeToJSON()
+        nillableDictionary["lastUpdated"] = self.lastUpdated?.encodeToJSON()
         nillableDictionary["name"] = self.name
-        nillableDictionary["description"] = self.description_
+        nillableDictionary["description"] = self.description
         nillableDictionary["uid"] = self.uid
         nillableDictionary["oid"] = self.oid
         nillableDictionary["hasCloudConnector"] = self.hasCloudConnector
@@ -126,51 +72,4 @@ public class DeviceType: NSCoder, JSONEncodable, NSCoding {
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
-    
-    // MARK: NSObject Methods
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(id, forKey: PropertyKey.id_key)
-        aCoder.encodeObject(uniqueName, forKey: PropertyKey.uniqueName_key)
-        aCoder.encodeObject(latestVersion, forKey: PropertyKey.latestVersion_key)
-        aCoder.encodeObject(lastUpdated, forKey: PropertyKey.lastUpdated_key)
-        aCoder.encodeObject(name, forKey: PropertyKey.name_key)
-        aCoder.encodeObject(description_, forKey: PropertyKey.description__key)
-        aCoder.encodeObject(uid, forKey: PropertyKey.uid_key)
-        aCoder.encodeObject(oid, forKey: PropertyKey.oid_key)
-        aCoder.encodeObject(hasCloudConnector, forKey: PropertyKey.hasCloudConnector_key)
-        aCoder.encodeObject(approved, forKey: PropertyKey.approved_key)
-        aCoder.encodeObject(published, forKey: PropertyKey.published_key)
-        aCoder.encodeObject(protected, forKey: PropertyKey.protected_key)
-        aCoder.encodeObject(inStore, forKey: PropertyKey.inStore_key)
-        aCoder.encodeObject(ownedByCurrentUser, forKey: PropertyKey.ownedByCurrentUser_key)
-        aCoder.encodeObject(tags, forKey: PropertyKey.tags_key)
-        aCoder.encodeObject(rsp, forKey: PropertyKey.rsp_key)
-        aCoder.encodeObject(issuerDn, forKey: PropertyKey.issuerDn_key)
-        aCoder.encodeObject(vid, forKey: PropertyKey.vid_key)
-    }
-    
-    required convenience public init(coder aDecoder: NSCoder) {
-        let id = aDecoder.decodeObjectForKey(PropertyKey.id_key) as? String
-        let uniqueName = aDecoder.decodeObjectForKey(PropertyKey.uniqueName_key) as? String
-        let latestVersion = aDecoder.decodeObjectForKey(PropertyKey.latestVersion_key) as? Int
-        let lastUpdated = aDecoder.decodeObjectForKey(PropertyKey.lastUpdated_key) as? Int
-        let name = aDecoder.decodeObjectForKey(PropertyKey.name_key) as? String
-        let description = aDecoder.decodeObjectForKey(PropertyKey.description__key) as? String
-        let uid = aDecoder.decodeObjectForKey(PropertyKey.uid_key) as? String
-        let oid = aDecoder.decodeObjectForKey(PropertyKey.oid_key) as? String
-        let hasCloudConnector = aDecoder.decodeObjectForKey(PropertyKey.hasCloudConnector_key) as? Bool
-        let approved = aDecoder.decodeObjectForKey(PropertyKey.approved_key) as? Bool
-        let published = aDecoder.decodeObjectForKey(PropertyKey.published_key) as? Bool
-        let protected = aDecoder.decodeObjectForKey(PropertyKey.protected_key) as? Bool
-        let inStore = aDecoder.decodeObjectForKey(PropertyKey.inStore_key) as? Bool
-        let ownedByCurrentUser = aDecoder.decodeObjectForKey(PropertyKey.ownedByCurrentUser_key) as? Bool
-        let tags = aDecoder.decodeObjectForKey(PropertyKey.tags_key) as? [Tag]
-        let rsp = aDecoder.decodeObjectForKey(PropertyKey.rsp_key) as? Bool
-        let issuerDn = aDecoder.decodeObjectForKey(PropertyKey.issuerDn_key) as? String
-        let vid = aDecoder.decodeObjectForKey(PropertyKey.vid_key) as? String
-        
-        self.init(id: id, uniqueName: uniqueName, latestVersion: latestVersion, lastUpdated: lastUpdated, name: name, description: description, uid: uid, oid: oid, hasCloudConnector: hasCloudConnector, approved: approved, published: published, protected: protected, inStore: inStore, ownedByCurrentUser: ownedByCurrentUser, tags: tags, rsp: rsp, issuerDn: issuerDn, vid: vid)
-    }
-    
-    
 }
