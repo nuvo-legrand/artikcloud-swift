@@ -77,8 +77,16 @@ public class User: NSObject, NSCoding, JSONEncodable {
         let email = aDecoder.decodeObjectForKey(PropertyKey.email_key) as? String
         let fullName = aDecoder.decodeObjectForKey(PropertyKey.fullName_key) as? String
         let saIdentity = aDecoder.decodeObjectForKey(PropertyKey.saIdentity) as? String
-        let createdOn = aDecoder.decodeInt64ForKey(PropertyKey.createdOn)
-        let modifiedOn = aDecoder.decodeInt64ForKey(PropertyKey.modifiedOn)
+        
+        var createdOn: Int64?
+        if aDecoder.containsValueForKey(PropertyKey.createdOn) {
+            createdOn = aDecoder.decodeInt64ForKey(PropertyKey.createdOn)
+        }
+        
+        var modifiedOn: Int64?
+        if aDecoder.containsValueForKey(PropertyKey.modifiedOn) {
+            modifiedOn = aDecoder.decodeInt64ForKey(PropertyKey.modifiedOn)
+        }
         
         self.init(id: id, name: name, email: email, fullname: fullName, saIdentity: saIdentity, createdOn: createdOn, modifiedOn: modifiedOn)
     }
