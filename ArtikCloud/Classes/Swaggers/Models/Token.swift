@@ -14,6 +14,7 @@ public class Token: JSONEncodable {
     public var expiresIn: Int64?
     public var scope: String?
     public var tokenType: String?
+    public var refreshToken: String?
 
     public init() {}
 
@@ -24,6 +25,7 @@ public class Token: JSONEncodable {
         nillableDictionary["expires_in"] = self.expiresIn?.encodeToJSON()
         nillableDictionary["scope"] = self.scope
         nillableDictionary["token_type"] = self.tokenType
+        nillableDictionary["refresh_token"] = self.refreshToken
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
