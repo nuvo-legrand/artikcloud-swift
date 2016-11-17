@@ -166,8 +166,8 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
-        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags).execute { (response, error) -> Void in
+    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil, doNotQueryUniqueName: Bool = false, initializableTypesOnly: Bool = false, completion: ((data: DeviceTypesEnvelope?, error: ErrorType?) -> Void)) {
+        getDeviceTypesWithRequestBuilder(name: name, offset: offset, count: count, tags: tags, doNotQueryUniqueName: doNotQueryUniqueName, initializableTypesOnly: initializableTypesOnly).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
         }
     }
@@ -181,9 +181,9 @@ public class DeviceTypesAPI: APIBase {
      - parameter tags: (query) Elements tagged with the list of tags. (comma separated) (optional)
      - returns: Promise<DeviceTypesEnvelope>
      */
-    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil) -> Promise<DeviceTypesEnvelope> {
+    public class func getDeviceTypes(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil, doNotQueryUniqueName: Bool = false, initializableTypesOnly: Bool = false) -> Promise<DeviceTypesEnvelope> {
         let deferred = Promise<DeviceTypesEnvelope>.pendingPromise()
-        getDeviceTypes(name: name, offset: offset, count: count, tags: tags) { data, error in
+        getDeviceTypes(name: name, offset: offset, count: count, tags: tags, doNotQueryUniqueName: doNotQueryUniqueName, initializableTypesOnly: initializableTypesOnly) { data, error in
             if let error = error {
                 deferred.reject(error)
             } else {
@@ -238,23 +238,29 @@ public class DeviceTypesAPI: APIBase {
 
      - returns: RequestBuilder<DeviceTypesEnvelope> 
      */
-    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil) -> RequestBuilder<DeviceTypesEnvelope> {
+    public class func getDeviceTypesWithRequestBuilder(name name: String, offset: Int32? = nil, count: Int32? = nil, tags: String? = nil, doNotQueryUniqueName: Bool = false, initializableTypesOnly: Bool = false) -> RequestBuilder<DeviceTypesEnvelope> {
         let path = "/devicetypes"
         let URLString = ArtikCloudAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [
-            "name": name,
+        var nillableParameters: [String:AnyObject?] = [
             "offset": offset?.encodeToJSON(),
             "count": count?.encodeToJSON(),
             "tags": tags
         ]
+        
+        if doNotQueryUniqueName {
+            nillableParameters["nameSearch"] = name
+        } else {
+            nillableParameters["name"] = name
+        }
+        
+        if initializableTypesOnly {
+            nillableParameters["createDevice"] = true
+        }
  
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
         let requestBuilder: RequestBuilder<DeviceTypesEnvelope>.Type = ArtikCloudAPI.requestBuilderFactory.getBuilder()
-
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
